@@ -1,0 +1,84 @@
+[
+  {
+    "case_id": "C031",
+    "root_cause": "Router R1 is missing a static default route to forward traffic to external destinations such as 10.10.10.50 via interface GigabitEthernet0/0/1.",
+    "osi_layer": "Layer 3",
+    "confidence": "high",
+    "evidence": "show ip route output shows 'Gateway of last resort is not set'",
+    "next_command": "show running-config | include ip route",
+    "fix_steps": [
+      "configure terminal",
+      "ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0/1",
+      "end"
+    ]
+  },
+  {
+    "case_id": "C032",
+    "root_cause": "Switch port FastEthernet0/12 has been placed into the err-disabled state, shutting down the interface.",
+    "osi_layer": "Layer 2",
+    "confidence": "high",
+    "evidence": "Fa0/12 disabled err-disabled",
+    "next_command": "show interfaces status err-disabled",
+    "fix_steps": [
+      "configure terminal",
+      "interface FastEthernet0/12",
+      "shutdown",
+      "no shutdown"
+    ]
+  },
+  {
+    "case_id": "C033",
+    "root_cause": "Subinterface GigabitEthernet0/0.40 is missing 802.1Q VLAN encapsulation, preventing VLAN 40 DHCP requests from reaching R1.",
+    "osi_layer": "Layer 2",
+    "confidence": "high",
+    "evidence": "interface GigabitEthernet0/0.40 shows 'ip address 192.168.40.1 255.255.255.0' without an 'encapsulation dot1Q 40' statement",
+    "next_command": "show running-config | section dhcp",
+    "fix_steps": [
+      "configure terminal",
+      "interface GigabitEthernet0/0.40",
+      "encapsulation dot1Q 40",
+      "end"
+    ]
+  },
+  {
+    "case_id": "C034",
+    "root_cause": "Sub-interface GigabitEthernet0/0.20 is administratively shut down, blocking inter-VLAN routing for VLAN 20.",
+    "osi_layer": "Layer 1",
+    "confidence": "high",
+    "evidence": "GigabitEthernet0/0.20 is administratively down line protocol is down",
+    "next_command": "show running-config interface GigabitEthernet0/0.20",
+    "fix_steps": [
+      "configure terminal",
+      "interface GigabitEthernet0/0.20",
+      "no shutdown"
+    ]
+  },
+  {
+    "case_id": "C035",
+    "root_cause": "The router's configured DNS name-server is set to an unreachable IP address, preventing hostnames such as webserver.local from being resolved.",
+    "osi_layer": "Layer 7",
+    "confidence": "high",
+    "evidence": "show ip dns view: ip name-server 192.168.1.250 (unreachable DNS server IP)",
+    "next_command": "ping 192.168.1.250",
+    "fix_steps": [
+      "configure terminal",
+      "no ip name-server 192.168.1.250",
+      "ip name-server <correct_dns_server_ip>",
+      "end"
+    ]
+  },
+  {
+    "case_id": "C036",
+    "root_cause": "A Native VLAN mismatch exists on the trunk link connecting SW1 and SW2 via interface GigabitEthernet0/1.",
+    "osi_layer": "Layer 2",
+    "confidence": "high",
+    "evidence": "The output of 'show interfaces trunk' reports 'Gi0/1 Auto / Auto native vlan 10 mismatch on native vlan 1'.",
+    "next_command": "show running-config interface GigabitEthernet0/1",
+    "fix_steps": [
+      "configure terminal",
+      "interface GigabitEthernet0/1",
+      "switchport trunk native vlan 10",
+      "end"
+    ]
+  }
+]
