@@ -5,6 +5,24 @@ symptoms and show-command output, proposes a likely fault, OSI layer, next
 command, and evidence-backed fix — but **never applies a fix without human
 review**.
 
+## File Structure
+
+```
+netsage-ai/
+├── cases/
+│   ├── cases.csv              # C001-C030
+│   ├── cases-02.csv           # C031-C060
+│   └── cases-03.csv           # C061-C090
+├── diagnose_prompt.md
+├── rule_checker.py
+├── simulate_ai_diagnosis.py
+├── ai_responses.json
+├── human_review_log.csv
+├── responsible_ai_log.md
+├── requirements.txt
+└── README.md
+```
+
 ## Contents
 
 | File | Purpose |
@@ -62,21 +80,14 @@ pick a file at random on every run, so new cases are picked up automatically.
 
 ## Workflow (matches the assignment's step-by-step)
 
-1. **Cases** — `cases/`, currently 60 cases (C001–C060) split across two files, covering VLAN, gateway, DHCP, DNS, routing, ACL, NAT, wireless, STP, VTP, GRE, and port-security faults.
+1. **Cases** — `cases/`, covering VLAN, gateway, DHCP, DNS, routing, ACL, NAT, wireless, STP, VTP, GRE, HSRP, EtherChannel, VPN, and port-security faults.
 2. **Prompts** — `diagnose_prompt.md`, forces JSON with `root_cause`, `confidence`, `evidence`, `next_command`, `fix_steps`.
 3. **Rule checker** — `rule_checker.py`, independent deterministic pass.
 4. **AI diagnosis** — `simulate_ai_diagnosis.py` → `ai_responses.json`.
 5. **Human review** — `human_review_log.csv`, every case marked Accepted / Edited / Rejected; corrected cases detailed in `responsible_ai_log.md`.
 
-## Current results snapshot
+## Made by
 
-- 60 cases logged across two case files in `cases/`, each with full evidence
-- Rule checker independently flags fault-relevant cases on deterministic signals alone (varies by which file is picked)
-- 5+ documented Responsible-AI corrections — see `responsible_ai_log.md`
-
-## Suggested demo script (5–10 min)
-
-1. Show a broken case in Packet Tracer (pick one from `cases/`, e.g. C001 VLAN misassignment).
-2. Run `simulate_ai_diagnosis.py` — show the AI's JSON output for that case.
-3. Show the reviewer's entry in `human_review_log.csv` for that case.
-4. Apply the fix in Packet Tracer, re-run the `next_command`, and verify.# NetSage-AI
+- Atharv Sheersh Chaturvedi
+- Apoorv Raj
+- Aman Kumar Patra
