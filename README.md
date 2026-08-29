@@ -5,7 +5,7 @@ symptoms and show-command output, proposes a likely fault, OSI layer, next
 command, and evidence-backed fix — but **never applies a fix without human
 review**.
 
-[🎥 Watch the Demo](https://github.com/AtharvSChaturvedi/NetSage-AI/blob/main/demo_video.mp4)
+[Watch the Demo](https://github.com/user-attachments/assets/79e5e46f-e64f-498e-907b-55eb215fabdf)
 
 ## File Structure
 
